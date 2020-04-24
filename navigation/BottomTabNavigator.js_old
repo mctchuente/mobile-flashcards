@@ -1,9 +1,12 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 
+import { Platform } from 'react-native'
+import { FontAwesome } from '@expo/vector-icons'
+import Colors from '../constants/Colors';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import AddDeckScreen from '../screens/AddDeckScreen';
+import LinksScreen from '../screens/LinksScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -21,15 +24,15 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={HomeScreen}
         options={{
           title: 'Decks',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-bookmarks" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
         }}
       />
       <BottomTab.Screen
-        name="AddDeck"
-        component={AddDeckScreen}
+        name="Links"
+        component={LinksScreen}
         options={{
           title: 'Add Deck',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-add-circle" />,
+          tabBarIcon: ({ focused }) => Platform.OS === 'ios' ? <TabBarIcon focused={focused} name="md-book" /> : <FontAwesome name='squared-plus' size={30} color={focused ? Colors.tabIconSelected : Colors.tabIconDefault} />,
         }}
       />
     </BottomTab.Navigator>
@@ -42,7 +45,7 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case 'Home':
       return '';
-    case 'AddDeck':
+    case 'Links':
       return '';
   }
 }
